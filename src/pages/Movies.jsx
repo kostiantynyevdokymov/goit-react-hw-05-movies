@@ -1,9 +1,9 @@
 import SearchBox from 'components/SearchBox/SearchBox';
-import HomeMovieList from 'components/MoviesList/HomeMoviesList';
+import MovieGalleryList from 'components/MoviesList/MovieGalleryList';
+import LoadMoreButton from 'components/LoadMoreButton/LoadMoreButton';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { getSearchQuery } from 'servies/api';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Movies = () => {
   const [page, setPage] = useState(1);
@@ -14,6 +14,7 @@ const Movies = () => {
 
   const location = useLocation();
   const query = searchParams.get('query');
+
   useEffect(() => {
     if (!query) {
       return;
@@ -22,25 +23,28 @@ const Movies = () => {
       setMovies([]);
     }
     getSearchQuery(page, query).then(data => {
-      setMovies(prevState => [...prevState, ...data.result]);
+      setMovies(prevState => [...prevState, ...data.results]);
       setTotal(data.total_page);
       setSearchQuery(query);
     });
   }, [query, page, searchQuery]);
 
-  //   const visibleMovies = movies.filter(movie =>
-  //     movie.name.toLowerCase().includes(movieName.toLowerCase())
-  //   );
-  const updateQueryString = name => {
-    const nextParams = name !== '' ? { name } : {};
-    setSearchParams(nextParams);
+  const updateQueryString = query => {
+    setPage(1);
+    setTotal(0);
+    setSearchParams({ query: query.searchMovie });
   };
+  const loadMoreBtn = () => {
+    setPage(prevState => prevState + 1);
+  };
+
   return (
     <>
-      <SearchBox value={query} onChange={updateQueryString} />
+      <SearchBox onSubmit={updateQueryString} />
       {movies.length > 0 && (
         <>
-          <HomeMovieList movies={movies} state={{ from: location }} />
+          <MovieGalleryList movies={movies} state={{ from: location }} />
+          {total !== page && <LoadMoreButton onClick={loadMoreBtn} />}
         </>
       )}
     </>

@@ -11,12 +11,12 @@ export const getTrendMovies = async page => {
 };
 export const getMovieInfo = async id => {
   const response = await axios.get(
-    `/movie/${id}/api_key=${KEY}&language=en-US`
+    `/movie/${id}?api_key=${KEY}&language=en-US`
   );
   return response;
 };
 
-export const getMovieReview = async id => {
+export const getMovieReviews = async id => {
   const response = await axios.get(
     `movie/${id}/reviews?api_key=${KEY}&language=en-US&page=1`
   );

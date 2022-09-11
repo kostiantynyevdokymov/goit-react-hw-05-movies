@@ -13,12 +13,13 @@ const Home = () => {
   const loadMoreBtn = () => {
     setPage(prevState => prevState + 1);
   };
+
   useEffect(() => {
     getTrendMovies(page).then(movies => {
       setMovies(prevState => [...prevState, ...movies.results]);
       setTotal(movies.total_page);
     });
-  });
+  }, [page]);
   return (
     <>
       <HomeMovieList movies={movies} state={{ from: location }} />

@@ -11,9 +11,8 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const location = useLocation();
   const query = searchParams.get('query');
+  const location = useLocation();
 
   useEffect(() => {
     if (!query) {

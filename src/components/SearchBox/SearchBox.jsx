@@ -9,25 +9,29 @@ const searchSchema = Yup.object().shape({
     .required('Required'),
 });
 
-const SearchBox = ({ onSubmit }) => (
-  <Formik
-    initialValues={{ searchMovie: '' }}
-    onSubmit={onSubmit}
-    validationSchema={searchSchema}
-  >
-    {({ errors, touched }) => (
-      <Form>
-        <Field name="searchMovie">
-          {errors.searchMovie && touched.searchMovie ? (
-            <div>{errors.searchMovie}</div>
-          ) : null}
-        </Field>
-      </Form>
-    )}
-  </Formik>
-);
+const SearchBox = ({ onSubmit }) => {
+  return (
+    <Formik
+      initialValues={{ searchMovie: '' }}
+      onSubmit={onSubmit}
+      validationSchema={searchSchema}
+    >
+      {({ errors, touched }) => (
+        <Form>
+          <Field name="searchMovie">
+            {errors.searchMovie && touched.searchMovie ? (
+              <div>{errors.searchMovie}</div>
+            ) : null}
+          </Field>
+          <button type="submit">Search</button>
+        </Form>
+      )}
+    </Formik>
+  );
+};
 
 export default SearchBox;
+
 SearchBox.propType = {
   onSubmit: PropTypes.func.isRequired,
 };

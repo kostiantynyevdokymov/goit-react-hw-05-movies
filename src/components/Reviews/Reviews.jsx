@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieReviews } from 'servies/api';
+import { getMovieReviews } from '../../servies/api';
 const Reviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
@@ -10,7 +10,6 @@ const Reviews = () => {
 
   return (
     <>
-      {' '}
       {reviews.length > 0 ? (
         <>
           <h2>Reviews</h2>
